@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pattes & Caresses — Salon de Toilettage Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --cream: #f8f3ec;
+    --cream-dark: #efe6d6;
+    --brown: #4a2f1d;
+    --brown-soft: #6b4a35;
+    --terra: #c97b5d;
+    --terra-dark: #a85e42;
+    --sage: #8ba888;
+    --gold: #d4a574;
+    --shadow: 0 10px 40px rgba(74, 47, 29, 0.1);
+    --shadow-lg: 0 20px 60px rgba(74, 47, 29, 0.15);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--brown);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 { font-family: 'Fraunces', serif; line-height: 1.2; }
+  img { max-width: 100%; display: block; }
+
+  /* NAVIGATION */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 18px 5%;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 1000;
+    background: rgba(248, 243, 236, 0.92);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(74, 47, 29, 0.08);
+    transition: padding 0.3s;
+  }
+  nav.scrolled { padding: 12px 5%; box-shadow: var(--shadow); }
+  .logo { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; color: var(--brown); display: flex; align-items: center; gap: 12px; cursor: pointer; }
+  .logo-icon {
+    width: 44px; height: 44px; background: var(--terra); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    animation: wiggle 3s ease-in-out infinite;
+  }
+  @keyframes wiggle { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+  nav ul { display: flex; gap: 36px; list-style: none; align-items: center; }
+  nav a { color: var(--brown); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s; position: relative; cursor: pointer; }
+  nav a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: var(--terra); transition: width 0.3s; }
+  nav a:hover::after { width: 100%; }
+  nav a:hover { color: var(--terra); }
+  .nav-cta {
+    background: var(--brown); color: var(--cream) !important; padding: 11px 24px; border-radius: 100px;
+    transition: all 0.3s;
+  }
+  .nav-cta:hover { background: var(--terra); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(201, 123, 93, 0.3); }
+  .nav-cta::after { display: none; }
+  .burger { display: none; cursor: pointer; font-size: 1.6rem; background: none; border: none; color: var(--brown); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; padding: 130px 5% 80px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: 5%; right: -10%;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(212, 165, 116, 0.18), transparent 70%);
+    border-radius: 50%; animation: float 8s ease-in-out infinite;
+    z-index: 0;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -10%; left: -5%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201, 123, 93, 0.12), transparent 70%);
+    border-radius: 50%; animation: float 10s ease-in-out infinite reverse;
+  }
+  @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-30px, -30px); } }
+  .hero-content { position: relative; z-index: 2; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201, 123, 93, 0.13); color: var(--terra-dark);
+    padding: 8px 18px; border-radius: 100px; font-size: 0.85rem; font-weight: 600;
+    margin-bottom: 24px;
+  }
+  .badge::before { content: '✦'; font-size: 0.7rem; }
+  .hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4.8rem); margin-bottom: 24px; font-weight: 600;
+  }
+  .hero h1 .accent { color: var(--terra); font-style: italic; font-weight: 400; }
+  .hero p {
+    font-size: 1.15rem; color: var(--brown-soft); margin-bottom: 36px; max-width: 500px;
+  }
+  .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn {
+    padding: 15px 34px; border-radius: 100px; font-weight: 600; font-size: 1rem;
+    text-decoration: none; cursor: pointer; border: none; transition: all 0.3s;
+    display: inline-flex; align-items: center; gap: 8px; font-family: inherit;
+  }
+  .btn-primary { background: var(--brown); color: var(--cream); }
+  .btn-primary:hover { background: var(--terra); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(201, 123, 93, 0.35); }
+  .btn-secondary { background: transparent; color: var(--brown); border: 2px solid var(--brown); }
+  .btn-secondary:hover { background: var(--brown); color: var(--cream); transform: translateY(-3px); }
+  .stats {
+    display: flex; gap: 48px; margin-top: 56px; flex-wrap: wrap;
+  }
+  .stat-num { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 700; color: var(--terra); line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 0.85rem; color: var(--brown-soft); font-weight: 500; }
+
+  /* HERO IMAGE */
+  .hero-visual {
+    position: relative; height: 560px;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1;
+  }
+  .hero-img-wrap {
+    width: 480px; height: 480px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(201, 123, 93, 0.35);
+    position: relative;
+    animation: pulse 5s ease-in-out infinite;
+    border: 8px solid var(--cream);
+  }
+  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+  .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+  .floating-card {
+    position: absolute; background: var(--cream);
+    padding: 14px 20px; border-radius: 18px;
+    box-shadow: var(--shadow-lg);
+    display: flex; align-items: center; gap: 12px;
+    z-index: 3;
+  }
+  .fc-1 { top: 8%; right: 0; animation: floatY 4s ease-in-out infinite; }
+  .fc-2 { bottom: 12%; left: -5%; animation: floatY 4s 1s ease-in-out infinite; }
+  .fc-3 { top: 50%; right: -8%; animation: floatY 4s 2s ease-in-out infinite; }
+  @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  .fc-emoji { font-size: 1.8rem; }
+  .fc-text { font-size: 0.85rem; }
+  .fc-text strong { display: block; font-size: 0.95rem; color: var(--brown); }
+  .fc-text span { color: var(--brown-soft); font-size: 0.8rem; }
+
+  /* SECTIONS */
+  section { padding: 110px 5%; position: relative; }
+  .section-header { text-align: center; max-width: 720px; margin: 0 auto 64px; }
+  .section-header .badge { margin-bottom: 16px; }
+  .section-header h2 { font-size: clamp(2.2rem, 4vw, 3.4rem); margin-bottom: 18px; font-weight: 600; }
+  .section-header p { color: var(--brown-soft); font-size: 1.1rem; }
+
+  /* CATEGORIES INTERACTIVES */
+  .categories { background: var(--cream-dark); }
+  .cat-tabs {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 12px;
+    max-width: 800px; margin: 0 auto 48px;
+  }
+  .cat-tab {
+    padding: 12px 26px; border-radius: 100px;
+    background: var(--cream); color: var(--brown); border: 2px solid transparent;
+    cursor: pointer; font-weight: 600; font-size: 0.95rem;
+    transition: all 0.3s; display: flex; align-items: center; gap: 8px;
+    font-family: inherit;
+  }
+  .cat-tab:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .cat-tab.active { background: var(--brown); color: var(--cream); border-color: var(--brown); }
+  .cat-tab .cat-emoji { font-size: 1.2rem; }
+
+  .cat-content {
+    max-width: 1200px; margin: 0 auto;
+    display: none;
+    animation: fadeIn 0.5s ease;
+  }
+  .cat-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  .cat-detail {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;
+    background: var(--cream); padding: 40px; border-radius: 28px;
+    box-shadow: var(--shadow);
+  }
+  .cat-image-big {
+    aspect-ratio: 1; border-radius: 24px; overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+  .cat-image-big img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+  .cat-image-big:hover img { transform: scale(1.06); }
+  .cat-info h3 { font-size: 2.2rem; margin-bottom: 16px; color: var(--brown); }
+  .cat-info > p { color: var(--brown-soft); margin-bottom: 28px; font-size: 1.05rem; }
+  .cat-services {
+    list-style: none; margin-bottom: 32px;
+  }
+  .cat-services li {
+    padding: 12px 0; border-bottom: 1px solid var(--cream-dark);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .cat-services li:last-child { border-bottom: none; }
+  .service-name { display: flex; align-items: center; gap: 10px; font-weight: 500; }
+  .service-name::before { content: '✓'; color: var(--sage); font-weight: 700; }
+  .service-price { color: var(--terra); font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.1rem; }
+
+  /* GALLERY */
+  .gallery { background: var(--cream); }
+  .gallery-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .gallery-item {
+    aspect-ratio: 1; border-radius: 24px; overflow: hidden;
+    position: relative; cursor: pointer;
+    transition: transform 0.4s;
+    box-shadow: var(--shadow);
+  }
+  .gallery-item:hover { transform: translateY(-8px); }
+  .gallery-item:nth-child(1) { grid-row: span 2; aspect-ratio: 1/2; }
+  .gallery-item:nth-child(6) { grid-column: span 2; aspect-ratio: 2/1; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+  .gallery-item:hover img { transform: scale(1.1); }
+  .gallery-item .label {
+    position: absolute; bottom: 16px; left: 16px;
+    background: rgba(74, 47, 29, 0.9); color: var(--cream);
+    padding: 8px 16px; border-radius: 100px; font-size: 0.85rem; font-weight: 600;
+    backdrop-filter: blur(10px);
+  }
+  .gallery-item .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(74, 47, 29, 0.4), transparent 50%);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .gallery-item:hover .overlay { opacity: 1; }
+
+  /* RESERVATION */
+  .reservation {
+    background: linear-gradient(135deg, var(--brown), #2d1b0e);
+    color: var(--cream); position: relative; overflow: hidden;
+  }
+  .reservation::before {
+    content: ''; position: absolute; top: -30%; right: -20%;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(201, 123, 93, 0.25), transparent 60%);
+    border-radius: 50%;
+  }
+  .reservation::after {
+    content: ''; position: absolute; bottom: -30%; left: -20%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(212, 165, 116, 0.15), transparent 60%);
+    border-radius: 50%;
+  }
+  .reservation .section-header h2 { color: var(--cream); }
+  .reservation .section-header p { color: rgba(248, 243, 236, 0.75); }
+  .reservation .badge { background: rgba(212, 165, 116, 0.2); color: var(--gold); }
+  .res-form {
+    max-width: 760px; margin: 0 auto;
+    background: rgba(248, 243, 236, 0.07);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(248, 243, 236, 0.15);
+    padding: 48px; border-radius: 28px;
+    position: relative; z-index: 2;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+  .form-group { display: flex; flex-direction: column; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label { font-size: 0.85rem; margin-bottom: 8px; color: rgba(248, 243, 236, 0.85); font-weight: 500; }
+  .form-group input, .form-group select, .form-group textarea {
+    padding: 14px 18px; border-radius: 14px; border: 1px solid rgba(248, 243, 236, 0.18);
+    background: rgba(248, 243, 236, 0.06); color: var(--cream);
+    font-family: inherit; font-size: 1rem; transition: all 0.3s;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(248, 243, 236, 0.4); }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none; border-color: var(--terra); background: rgba(248, 243, 236, 0.1);
+  }
+  .form-group select option { background: var(--brown); color: var(--cream); }
+  .res-form button {
+    width: 100%; margin-top: 24px;
+    background: var(--terra); color: var(--cream);
+    padding: 18px; border: none; border-radius: 14px;
+    font-size: 1.1rem; font-weight: 600; cursor: pointer;
+    transition: all 0.3s; font-family: inherit;
+  }
+  .res-form button:hover { background: var(--gold); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(201, 123, 93, 0.4); }
+  .success-msg {
+    display: none; padding: 20px; background: rgba(139, 168, 136, 0.25);
+    border: 1px solid var(--sage); border-radius: 14px; margin-top: 20px;
+    color: var(--cream); text-align: center; font-weight: 500;
+  }
+  .success-msg.show { display: block; animation: slideUp 0.5s ease; }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* AVIS GOOGLE */
+  .reviews { background: var(--cream); }
+  .google-bar {
+    max-width: 1100px; margin: 0 auto 56px;
+    background: white; border-radius: 24px; padding: 28px 36px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;
+    box-shadow: var(--shadow);
+  }
+  .google-info { display: flex; align-items: center; gap: 20px; }
+  .google-logo { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700; }
+  .google-logo span:nth-child(1) { color: #4285F4; }
+  .google-logo span:nth-child(2) { color: #EA4335; }
+  .google-logo span:nth-child(3) { color: #FBBC05; }
+  .google-logo span:nth-child(4) { color: #4285F4; }
+  .google-logo span:nth-child(5) { color: #34A853; }
+  .google-logo span:nth-child(6) { color: #EA4335; }
+  .google-divider {
+    border-left: 1px solid #e0e0e0; padding-left: 20px;
+  }
+  .google-divider .gn { font-weight: 600; font-size: 1.05rem; }
+  .google-divider .gs { font-size: 0.85rem; color: var(--brown-soft); }
+  .rating-big { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
+  .rating-big .num { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 700; color: var(--brown); line-height: 1; }
+  .rating-big .stars { color: #FBBC05; font-size: 1.3rem; letter-spacing: 2px; }
+  .rating-big .count { font-size: 0.85rem; color: var(--brown-soft); }
+
+  .review-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px; max-width: 1200px; margin: 0 auto;
+  }
+  .review-card {
+    background: white; padding: 30px; border-radius: 20px;
+    box-shadow: var(--shadow); transition: all 0.3s;
+  }
+  .review-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+  .review-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .avatar {
+    width: 54px; height: 54px; border-radius: 50%;
+    overflow: hidden; flex-shrink: 0;
+    border: 2px solid var(--cream-dark);
+  }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .review-name { font-weight: 600; font-size: 1rem; }
+  .review-date { font-size: 0.82rem; color: var(--brown-soft); display: flex; align-items: center; gap: 6px; }
+  .review-date::before { content: ''; width: 14px; height: 14px; background: #4285F4; border-radius: 50%; display: inline-block; }
+  .review-stars { color: #FBBC05; margin-bottom: 14px; font-size: 1.1rem; letter-spacing: 2px; }
+  .review-text { color: var(--brown-soft); font-size: 0.95rem; line-height: 1.7; }
+
+  /* CONTACT */
+  .contact { background: var(--cream-dark); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 56px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .contact-info h3 { font-size: 2rem; margin-bottom: 18px; }
+  .contact-info > p { color: var(--brown-soft); margin-bottom: 36px; font-size: 1.05rem; }
+  .contact-item {
+    display: flex; gap: 18px; margin-bottom: 18px;
+    padding: 22px; background: var(--cream); border-radius: 18px;
+    transition: all 0.3s; cursor: pointer;
+  }
+  .contact-item:hover { transform: translateX(8px); box-shadow: var(--shadow); }
+  .contact-icon {
+    width: 54px; height: 54px; flex-shrink: 0;
+    background: var(--terra); color: var(--cream); border-radius: 14px;
+    display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+  }
+  .contact-item h4 { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--brown-soft); font-weight: 500; margin-bottom: 4px; }
+  .contact-item p { font-weight: 600; color: var(--brown); font-size: 1.05rem; }
+  .map-box { background: var(--cream); border-radius: 28px; padding: 36px; box-shadow: var(--shadow); }
+  .map-iframe-wrap { aspect-ratio: 4/3; border-radius: 18px; overflow: hidden; margin-bottom: 24px; box-shadow: var(--shadow); }
+  .map-iframe-wrap iframe { width: 100%; height: 100%; border: none; }
+  .map-box h4 { font-family: 'Fraunces', serif; font-size: 1.5rem; margin-bottom: 18px; font-weight: 600; }
+  .schedule-list { list-style: none; }
+  .schedule-list li {
+    display: flex; justify-content: space-between;
+    padding: 12px 0; border-bottom: 1px solid var(--cream-dark);
+    font-size: 0.95rem;
+  }
+  .schedule-list li:last-child { border-bottom: none; }
+  .schedule-list .day { font-weight: 600; }
+  .schedule-list .closed { color: var(--terra); font-weight: 500; }
+
+  /* FOOTER */
+  footer {
+    background: var(--brown); color: var(--cream);
+    padding: 70px 5% 30px; text-align: center;
+  }
+  footer .logo { justify-content: center; color: var(--cream); margin-bottom: 18px; }
+  footer p { color: rgba(248, 243, 236, 0.7); font-size: 0.95rem; margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .socials { display: flex; gap: 14px; justify-content: center; margin-bottom: 36px; }
+  .socials a {
+    width: 48px; height: 48px; background: rgba(248, 243, 236, 0.1);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: var(--cream); text-decoration: none; transition: all 0.3s; font-size: 1.2rem;
+    cursor: pointer;
+  }
+  .socials a:hover { background: var(--terra); transform: translateY(-4px); }
+  .copyright { padding-top: 28px; border-top: 1px solid rgba(248, 243, 236, 0.1); font-size: 0.85rem; color: rgba(248, 243, 236, 0.6); }
+
+  /* RESPONSIVE */
+  @media (max-width: 968px) {
+    nav ul { display: none; }
+    nav ul.open {
+      display: flex; flex-direction: column; position: absolute;
+      top: 100%; left: 0; right: 0; background: var(--cream);
+      padding: 28px; gap: 20px; box-shadow: var(--shadow); align-items: stretch;
+    }
+    .burger { display: block; }
+    .hero { grid-template-columns: 1fr; padding-top: 110px; gap: 40px; }
+    .hero-visual { height: 400px; order: -1; }
+    .hero-img-wrap { width: 320px; height: 320px; border-width: 6px; }
+    .floating-card { padding: 10px 14px; }
+    .fc-emoji { font-size: 1.4rem; }
+    .stats { gap: 28px; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item:nth-child(1), .gallery-item:nth-child(6) { grid-row: auto; grid-column: auto; aspect-ratio: 1; }
+    .form-row { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 36px; }
+    .res-form { padding: 28px; }
+    .cat-detail { grid-template-columns: 1fr; padding: 28px; gap: 30px; }
+    .cat-image-big { max-width: 400px; margin: 0 auto; }
+    .google-bar { padding: 22px 24px; flex-direction: column; align-items: flex-start; }
+    .rating-big { align-items: flex-start; }
+  }
+  @media (max-width: 540px) {
+    .hero h1 { font-size: 2.2rem; }
+    .hero-img-wrap { width: 260px; height: 260px; }
+    section { padding: 70px 5%; }
+    .stats { flex-direction: column; gap: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <div class="logo" onclick="scrollToSection('accueil')">
+    <div class="logo-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><circle cx="6" cy="9" r="2"/><circle cx="10" cy="6" r="2"/><circle cx="14" cy="6" r="2"/><circle cx="18" cy="9" r="2"/><ellipse cx="12" cy="15" rx="5" ry="4"/></svg>
+    </div>
+    Pattes & Caresses
+  </div>
+  <ul id="navMenu">
+    <li><a onclick="scrollToSection('accueil')">Accueil</a></li>
+    <li><a onclick="scrollToSection('services')">Services</a></li>
+    <li><a onclick="scrollToSection('galerie')">Galerie</a></li>
+    <li><a onclick="scrollToSection('avis')">Avis</a></li>
+    <li><a onclick="scrollToSection('contact')">Contact</a></li>
+    <li><a class="nav-cta" onclick="scrollToSection('reservation')">Réserver</a></li>
+  </ul>
+  <button class="burger" onclick="document.getElementById('navMenu').classList.toggle('open')">☰</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="accueil">
+  <div class="hero-content">
+    <div class="badge">Salon de toilettage premium</div>
+    <h1>Le bien-être de vos compagnons à <span class="accent">poil & plumes</span></h1>
+    <p>Une équipe passionnée prend soin de votre animal dans un cadre apaisant. Toilettage doux, sur-mesure et certifié, pour chiens, chats, rongeurs et plus encore.</p>
+    <div class="hero-buttons">
+      <button class="btn btn-primary" onclick="scrollToSection('reservation')">Prendre rendez-vous →</button>
+      <button class="btn btn-secondary" onclick="scrollToSection('services')">Voir nos services</button>
+    </div>
+    <div class="stats">
+      <div><div class="stat-num">12+</div><div class="stat-label">Années d'expérience</div></div>
+      <div><div class="stat-num">2 400</div><div class="stat-label">Clients heureux</div></div>
+      <div><div class="stat-num">4,9★</div><div class="stat-label">Note Google</div></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-img-wrap">
+      <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=900&h=900&fit=crop" alt="Chien heureux après toilettage">
+    </div>
+    <div class="floating-card fc-1">
+      <div class="fc-emoji">🐾</div>
+      <div class="fc-text"><strong>+2 400</strong><span>Animaux choyés</span></div>
+    </div>
+    <div class="floating-card fc-2">
+      <div class="fc-emoji">⭐</div>
+      <div class="fc-text"><strong>4,9 / 5</strong><span>327 avis Google</span></div>
+    </div>
+    <div class="floating-card fc-3">
+      <div class="fc-emoji">✂️</div>
+      <div class="fc-text"><strong>Pro certifié</strong><span>Depuis 2013</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES INTERACTIVES -->
+<section class="categories" id="services">
+  <div class="section-header">
+    <div class="badge">Nos prestations</div>
+    <h2>Des soins adaptés à chaque animal</h2>
+    <p>Du chiot espiègle au chat sénior, en passant par le lapin curieux : nous avons une formule pour tous. Cliquez sur une catégorie pour découvrir le détail.</p>
+  </div>
+
+  <div class="cat-tabs">
+    <button class="cat-tab active" data-cat="chien"><span class="cat-emoji">🐕</span> Chiens</button>
+    <button class="cat-tab" data-cat="chat"><span class="cat-emoji">🐈</span> Chats</button>
+    <button class="cat-tab" data-cat="rongeur"><span class="cat-emoji">🐰</span> Rongeurs & Lapins</button>
+    <button class="cat-tab" data-cat="premium"><span class="cat-emoji">✨</span> Soins premium</button>
+  </div>
+
+  <div class="cat-content active" id="cat-chien">
+    <div class="cat-detail">
+      <div class="cat-image-big">
+        <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&h=800&fit=crop" alt="Chien lors d'une séance de toilettage">
+      </div>
+      <div class="cat-info">
+        <h3>Toilettage Chiens</h3>
+        <p>Du Chihuahua au Saint-Bernard, chaque chien reçoit un soin personnalisé selon sa race, son pelage et son tempérament. Bain à l'eau tempérée, séchage doux, coupe maîtrisée.</p>
+        <ul class="cat-services">
+          <li><span class="service-name">Bain & brossage</span><span class="service-price">35€</span></li>
+          <li><span class="service-name">Toilettage complet</span><span class="service-price">55€</span></li>
+          <li><span class="service-name">Coupe ciseaux race</span><span class="service-price">75€</span></li>
+          <li><span class="service-name">Coupe des griffes</span><span class="service-price">15€</span></li>
+        </ul>
+        <button class="btn btn-primary" onclick="scrollToSection('reservation')">Réserver pour mon chien →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-content" id="cat-chat">
+    <div class="cat-detail">
+      <div class="cat-image-big">
+        <img src="https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?w=800&h=800&fit=crop" alt="Chat élégant après toilettage">
+      </div>
+      <div class="cat-info">
+        <h3>Toilettage Chats</h3>
+        <p>Toilettage tout en douceur pour félins, dans une cabine séparée et silencieuse. Idéal pour les Persans, Maine Coons, ou simplement pour soulager les chats à poils longs.</p>
+        <ul class="cat-services">
+          <li><span class="service-name">Bain & démêlage</span><span class="service-price">45€</span></li>
+          <li><span class="service-name">Coupe sanitaire</span><span class="service-price">35€</span></li>
+          <li><span class="service-name">Toilettage complet</span><span class="service-price">65€</span></li>
+          <li><span class="service-name">Coupe lion</span><span class="service-price">80€</span></li>
+        </ul>
+        <button class="btn btn-primary" onclick="scrollToSection('reservation')">Réserver pour mon chat →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-content" id="cat-rongeur">
+    <div class="cat-detail">
+      <div class="cat-image-big">
+        <img src="https://images.unsplash.com/photo-1535241749838-299277b6305f?w=800&h=800&fit=crop" alt="Lapin tout doux">
+      </div>
+      <div class="cat-info">
+        <h3>Rongeurs & Lapins</h3>
+        <p>NAC bienvenus ! Lapins, cochons d'Inde, hamsters, chinchillas : nos toiletteurs sont formés aux particularités de chaque petit compagnon, dans le plus grand respect.</p>
+        <ul class="cat-services">
+          <li><span class="service-name">Brossage minutieux</span><span class="service-price">25€</span></li>
+          <li><span class="service-name">Coupe des griffes</span><span class="service-price">12€</span></li>
+          <li><span class="service-name">Contrôle des dents</span><span class="service-price">15€</span></li>
+          <li><span class="service-name">Forfait bien-être</span><span class="service-price">40€</span></li>
+        </ul>
+        <button class="btn btn-primary" onclick="scrollToSection('reservation')">Réserver pour mon NAC →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-content" id="cat-premium">
+    <div class="cat-detail">
+      <div class="cat-image-big">
+        <img src="https://images.unsplash.com/photo-1544568100-847a948585b9?w=800&h=800&fit=crop" alt="Chien dans un spa premium">
+      </div>
+      <div class="cat-info">
+        <h3>Soins Premium & Spa</h3>
+        <p>Une expérience complète pour les animaux qui méritent le grand luxe : masque hydratant, parfum doux, finition au sèche-cheveux pulsé et nœud ou bandana en cadeau.</p>
+        <ul class="cat-services">
+          <li><span class="service-name">Spa relaxant</span><span class="service-price">60€</span></li>
+          <li><span class="service-name">Masque hydratant</span><span class="service-price">25€</span></li>
+          <li><span class="service-name">Soin des coussinets</span><span class="service-price">18€</span></li>
+          <li><span class="service-name">Forfait Royal</span><span class="service-price">120€</span></li>
+        </ul>
+        <button class="btn btn-primary" onclick="scrollToSection('reservation')">Réserver le forfait premium →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="galerie">
+  <div class="section-header">
+    <div class="badge">Nos petits modèles</div>
+    <h2>Une galerie pleine de tendresse</h2>
+    <p>Découvrez quelques-uns de nos clients à quatre pattes après leur séance bien-être.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=600&h=1200&fit=crop" alt="Golden Retriever">
+      <div class="overlay"></div>
+      <div class="label">Golden — Léo</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&h=600&fit=crop" alt="Chat tigré">
+      <div class="overlay"></div>
+      <div class="label">Chat — Mistigri</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1452857297128-d9c29adba80b?w=600&h=600&fit=crop" alt="Lapin blanc">
+      <div class="overlay"></div>
+      <div class="label">Lapin — Caramel</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1591946614720-90a587da4a36?w=600&h=600&fit=crop" alt="Labrador chocolat">
+      <div class="overlay"></div>
+      <div class="label">Labrador — Mocha</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1534361960057-19889db9621e?w=600&h=600&fit=crop" alt="Caniche blanc">
+      <div class="overlay"></div>
+      <div class="label">Caniche — Bella</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=1200&h=600&fit=crop" alt="Schnauzer gris">
+      <div class="overlay"></div>
+      <div class="label">Schnauzer — Pixel</div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVATION -->
+<section class="reservation" id="reservation">
+  <div class="section-header">
+    <div class="badge">Réservation en ligne</div>
+    <h2>Prenez rendez-vous en quelques clics</h2>
+    <p>Choisissez la date qui vous convient, on s'occupe du reste.</p>
+  </div>
+  <form class="res-form" onsubmit="bookAppointment(event)">
+    <div class="form-row">
+      <div class="form-group"><label>Prénom *</label><input type="text" required placeholder="Marie"></div>
+      <div class="form-group"><label>Téléphone *</label><input type="tel" required placeholder="06 12 34 56 78"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full"><label>Email *</label><input type="email" required placeholder="marie@email.com"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Type d'animal *</label>
+        <select required>
+          <option value="">— Choisir —</option>
+          <option>Chien</option>
+          <option>Chat</option>
+          <option>Lapin / Rongeur</option>
+          <option>Autre NAC</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Prestation *</label>
+        <select required>
+          <option value="">— Choisir —</option>
+          <option>Bain & brossage</option>
+          <option>Toilettage complet</option>
+          <option>Coupe des griffes</option>
+          <option>Spa premium</option>
+          <option>Forfait Royal</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Date souhaitée *</label><input type="date" required></div>
+      <div class="form-group">
+        <label>Créneau *</label>
+        <select required>
+          <option value="">— Choisir —</option>
+          <option>09h00 — 11h00</option>
+          <option>11h00 — 13h00</option>
+          <option>14h00 — 16h00</option>
+          <option>16h00 — 18h00</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Message (facultatif)</label>
+        <textarea rows="3" placeholder="Votre animal est-il sociable ? Allergies, particularités..."></textarea>
+      </div>
+    </div>
+    <button type="submit">Confirmer ma réservation 🐾</button>
+    <div class="success-msg" id="successMsg">✓ Merci ! Votre demande a bien été reçue. Nous vous recontactons sous 24h.</div>
+  </form>
+</section>
+
+<!-- AVIS GOOGLE -->
+<section class="reviews" id="avis">
+  <div class="section-header">
+    <div class="badge">Avis vérifiés Google</div>
+    <h2>Ce que disent nos clients</h2>
+    <p>La satisfaction des humains... et de leurs compagnons !</p>
+  </div>
+
+  <div class="google-bar">
+    <div class="google-info">
+      <div class="google-logo">
+        <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+      </div>
+      <div class="google-divider">
+        <div class="gn">Pattes & Caresses</div>
+        <div class="gs">Salon de toilettage</div>
+      </div>
+    </div>
+    <div class="rating-big">
+      <div class="num">4,9 / 5</div>
+      <div class="stars">★★★★★</div>
+      <div class="count">Basé sur 327 avis Google</div>
+    </div>
+  </div>
+
+  <div class="review-grid">
+    <div class="review-card">
+      <div class="review-head">
+        <div class="avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop" alt="Sophie"></div>
+        <div><div class="review-name">Sophie Dubois</div><div class="review-date">il y a 2 semaines</div></div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Mon caniche est rentré transformé ! L'équipe est bienveillante, douce et hyper professionnelle. Bella adore y aller, ce qui en dit long. Je recommande à 100%.</p>
+    </div>
+    <div class="review-card">
+      <div class="review-head">
+        <div class="avatar"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop" alt="Thomas"></div>
+        <div><div class="review-name">Thomas Martin</div><div class="review-date">il y a 1 mois</div></div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Premier toilettage pour notre chat un peu craintif. Patience exemplaire de la toiletteuse, résultat impeccable. Mistigri n'a même pas miaulé !</p>
+    </div>
+    <div class="review-card">
+      <div class="review-head">
+        <div class="avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop" alt="Émilie"></div>
+        <div><div class="review-name">Émilie Laurent</div><div class="review-date">il y a 3 semaines</div></div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Salon hyper propre, ambiance apaisante, et surtout des conseils de pro pour entretenir le poil entre les visites. Les tarifs sont justes pour la qualité.</p>
+    </div>
+    <div class="review-card">
+      <div class="review-head">
+        <div class="avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop" alt="Julien"></div>
+        <div><div class="review-name">Julien Roux</div><div class="review-date">il y a 2 mois</div></div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">J'amène mon Schnauzer depuis deux ans, jamais déçu. Réservation en ligne ultra simple, ponctualité au rendez-vous, et un vrai amour pour les animaux.</p>
+    </div>
+    <div class="review-card">
+      <div class="review-head">
+        <div class="avatar"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=200&h=200&fit=crop" alt="Camille"></div>
+        <div><div class="review-name">Camille Noël</div><div class="review-date">il y a 5 jours</div></div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">J'ai testé le forfait spa premium pour l'anniversaire de ma chienne, elle en est ressortie soyeuse comme un nuage. Petit cadeau offert à la sortie, top !</p>
+    </div>
+    <div class="review-card">
+      <div class="review-head">
+        <div class="avatar"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop" alt="Pierre"></div>
+        <div><div class="review-name">Pierre Bernard</div><div class="review-date">il y a 1 semaine</div></div>
+      </div>
+      <div class="review-stars">★★★★☆</div>
+      <p class="review-text">Très bonne prestation pour mon lapin nain. Habitué aux toiletteurs spécialisés chiens/chats, c'est rare de trouver quelqu'un qui s'y connaît en NAC. Bravo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-header">
+    <div class="badge">On vous attend</div>
+    <h2>Venir nous rencontrer</h2>
+    <p>Notre salon vous accueille dans une ambiance chaleureuse, avec parking gratuit à proximité.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>Toujours à votre écoute</h3>
+      <p>N'hésitez pas à nous appeler ou à passer nous voir. Nous prenons le temps de répondre à toutes vos questions.</p>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div><h4>Adresse</h4><p>14 rue des Lilas, 75011 Paris</p></div>
+      </div>
+      <a href="tel:0123456789" style="text-decoration:none; color:inherit;">
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div><h4>Téléphone</h4><p>01 23 45 67 89</p></div>
+        </div>
+      </a>
+      <a href="mailto:contact@pattes-caresses.fr" style="text-decoration:none; color:inherit;">
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div><h4>Email</h4><p>contact@pattes-caresses.fr</p></div>
+        </div>
+      </a>
+    </div>
+    <div class="map-box">
+      <div class="map-iframe-wrap">
+        <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=2.3717%2C48.8553%2C2.3917%2C48.8653&amp;layer=mapnik&amp;marker=48.8603%2C2.3817" loading="lazy"></iframe>
+      </div>
+      <h4>Horaires d'ouverture</h4>
+      <ul class="schedule-list">
+        <li><span class="day">Lundi</span><span class="closed">Fermé</span></li>
+        <li><span class="day">Mardi — Vendredi</span><span>9h00 — 19h00</span></li>
+        <li><span class="day">Samedi</span><span>9h00 — 18h00</span></li>
+        <li><span class="day">Dimanche</span><span class="closed">Fermé</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">
+    <div class="logo-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><circle cx="6" cy="9" r="2"/><circle cx="10" cy="6" r="2"/><circle cx="14" cy="6" r="2"/><circle cx="18" cy="9" r="2"/><ellipse cx="12" cy="15" rx="5" ry="4"/></svg>
+    </div>
+    Pattes & Caresses
+  </div>
+  <p>Votre salon de toilettage de confiance depuis 2013. Nous prenons soin de vos compagnons avec passion et professionnalisme.</p>
+  <div class="socials">
+    <a aria-label="Instagram">📷</a>
+    <a aria-label="Facebook"><strong>f</strong></a>
+    <a aria-label="TikTok">♪</a>
+  </div>
+  <div class="copyright">© 2026 Pattes & Caresses — Tous droits réservés</div>
+</footer>
+
+<script>
+  // Smooth scroll
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('navMenu').classList.remove('open');
+  }
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('mainNav');
+    if (window.scrollY > 50) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  // Tabs categories
+  document.querySelectorAll('.cat-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.cat-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('cat-' + tab.dataset.cat).classList.add('active');
+    });
+  });
+
+  // Form
+  function bookAppointment(e) {
+    e.preventDefault();
+    const msg = document.getElementById('successMsg');
+    msg.classList.add('show');
+    e.target.reset();
+    setTimeout(() => msg.classList.remove('show'), 7000);
+    msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Date min today
+  const dateInput = document.querySelector('input[type="date"]');
+  if (dateInput) dateInput.min = new Date().toISOString().split('T')[0];
+</script>
+
+</body>
+</html>
